@@ -1,0 +1,33 @@
+Hardware description:
+	Attiny45 with I2C (using USI) for communication with core
+	Uses 74164 & 74165 standard logic chips for input from buttons (w/ hardware debouncing) 
+	and for output to 7-segment display
+
+Software description:
+	In I2C, no data type byte is used since just R/W request is enough.
+	Writing always sets 7-segment state. Reading always sends buttons state
+
+Joystick recieves:
+	Number for 7-segment - 1 byte
+
+Joystick sends:
+	Buttons state - 1 byte
+
+7-segment number byte format:
+	
+	xxxyzzzz
+
+	xxx - reserved (actually not used) (set to 0)
+	
+	y - dot state (1 is on)
+	
+	zzzz - number to display (displays hex numbers)
+
+Button state byte format:
+
+	xxyyyyyy
+
+	xx - reserved (actually not used) (set to 0)
+
+	yyyyyy - button states (1 is pressed) in order (left to  right)
+		up, down, left, right, A, B

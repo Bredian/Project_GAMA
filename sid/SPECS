@@ -1,0 +1,50 @@
+Hardware description:
+	Attiny45 w/ I2C (using USI) for communication w/ core
+	Have 3 channels w/ pieso speakers.
+
+Software description:
+	Each channel has its own buffer (for now, size is unknown).
+	Clocks are used for measures & for tone frequency.
+	I2C uses interrupts. Data type byte is used when recieving to
+	decide how to use them. Read request results in sending of the state byte.
+
+SID recieves:
+        data type - 1 byte
+        BPM - 1 byte
+        loop mode on (1 bit per channel) - in data type byte
+        tones (1 byte tone + 1 byte measure) (empty tone included) - 2 bytes/tone
+
+SID sends:
+        state byte (3 bits for loop state & 3 bits for "not enough tones" (when 3-4 tones left on channel)) - 1 byte
+
+
+Data type byte format:
+
+	11xx0000 - will recieve tone in channel xx
+
+	10000000 - will recieve BPM
+
+	01xxx000 - set loop modes xxx (1 is loop on) on channels (left to right)
+	
+	00xxxxxx - reserved (actually not used)
+
+Tone format:
+	2 bytes per tone
+
+	xxxxyyyy zzzzzzzz
+
+	xxxx - basic tone (in highest octave)
+
+	yyyy - octave
+
+	zzzzzzzz - measure (time tone is played)
+
+State byte format:
+
+	xxyyyzzz
+
+	xx - reserved (actually not used)
+
+	yyy - loop state (1 is loop on) per channel (left to right)
+
+	zzz - "not enough tones" - 1 when less than 4 tones in buffer (value may be changed later)

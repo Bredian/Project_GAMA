@@ -10,6 +10,7 @@
 		.equ PIN_SCL PINB2
 		.equ PORT_SDA PORTB0
 		.equ PORT_SCL PORTB2
+		
 		.equ START_CONDITION_INT USISIF	;define for Start Condition Interrupt flag
 
 
@@ -60,8 +61,8 @@
 
 ; End Interrupts ==========================================
 
-reset:      LDI     R16,low(RAMEND) ; Инициализация стека
-			OUT     SPL,R16         ; Обязательно!!!
+reset:      LDI     R16,low(RAMEND) ; Stack init
+			OUT     SPL,R16         ; 
 
 			LDI     R16,high(RAMEND)
 			OUT     SPH,R16
@@ -117,4 +118,4 @@ i2c_rcv_data:
 
 
 ; EEPROM =====================================================
-			.ESEG               ; Сегмент EEPROM
+			.ESEG               ;
