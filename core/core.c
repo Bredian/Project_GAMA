@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "bomb.h"
+#include "map.h"
 
 int setup(){
 	
