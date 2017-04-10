@@ -9,14 +9,16 @@ int bomb_placement(){
   	c--;
   	int d=heroy;
   	d++;
-	7_Segment_Show(bc);
+	/*7_Segment_Show(bc);*/
+	/*7 Segment interaction here*/	
 	if(mapa[heroy][a]!='#' && mapa[heroy][a]!='@' && mapa[heroy][a]!='=' && /*button interaction here (left)*/){
 	            bx=a;
                 by=heroy;
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                7_Segment_Clean();
+                /*7_Segment_Clean();*/
+		/*7 Segment interaction here*/
                 break;
 	}
 	if(mapa[heroy][b]!='#' && mapa[heroy][b]!='@' && mapa[heroy][b]!='=' && /*button interaction here (right)*/){
@@ -25,7 +27,8 @@ int bomb_placement(){
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                7_Segment_Clean();
+                /*7_Segment_Clean();*/
+		/*7 Segment interaction here*/
                 break;
 	}
 	if(mapa[c][herox]!='#' && mapa[c][herox]!='@' && mapa[c][herox]!='=' && /*button interaction here (down)*/){
@@ -34,7 +37,8 @@ int bomb_placement(){
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                7_Segment_Clean();
+                /*7_Segment_Clean();*/
+		/*7 Segment interaction here*/
                 break;
 	}
 	if(mapa[d][herox]!='#' && mapa[d][herox]!='@' && mapa[d][herox]!='=' && /*button interaction here (up)*/){
@@ -43,7 +47,8 @@ int bomb_placement(){
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                7_Segment_Clean();
+                /*7_Segment_Clean();*/
+		/*7 Segment interaction here*/
                 break;
 	}
 }
