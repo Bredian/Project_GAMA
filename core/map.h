@@ -1,3 +1,7 @@
+/*level, enemies, hero*/
+int level=1;
+int enemies [80][2];
+int herox,heroy;
 /*clear map*/
 char mapac1[10][42]=
     {   
