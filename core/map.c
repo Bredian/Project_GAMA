@@ -39,7 +39,7 @@ int generate_level(int level){
 }
 
 int copy_map(){
-	    int i=0,j=0;
+	int i=0,j=0;
   for(j=0;j<10;j++){
             for(i=0;i<42;i++){
               mapa[j][i]=mapac1[j][i];
