@@ -1,4 +1,5 @@
 #include "bomb.h"
+#include "map.h"
 
 int bomb_placement(){
 	int a=herox;
