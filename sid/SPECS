@@ -7,6 +7,7 @@ Software description:
 	Clocks are used for measures & for tone frequency.
 	I2C uses interrupts. Data type byte is used when recieving to
 	decide how to use them. Read request results in sending of the state byte.
+	I2C address is 0x03
 
 SID recieves:
         data type - 1 byte
