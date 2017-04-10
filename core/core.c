@@ -3,6 +3,7 @@
 #include <math.h>
 #include "bomb.h"
 #include "map.h"
+#include "logic.h"
 
 int setup(){
 	
