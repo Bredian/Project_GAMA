@@ -9,6 +9,11 @@
 #include "joystick.h"
 
 int setup(){
+	/*Turning All Devices On*/
+	/*Demo Screens Here*/
+	copy_map();
+	generate_level(level);
+	/*Printing Map Function Here*/
 	
 }
 
