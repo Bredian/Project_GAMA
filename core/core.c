@@ -4,6 +4,9 @@
 #include "bomb.h"
 #include "map.h"
 #include "logic.h"
+#include "screen.h"
+#include "sid.h"
+#include "joystick.h"
 
 int setup(){
 	
