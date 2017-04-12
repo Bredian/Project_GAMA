@@ -1,3 +1,6 @@
+!!!FOR NOW, LOOP MODE IS NOT IMPLEMENTED!!!
+
+
 Hardware description:
 	Attiny45 w/ I2C (using USI) for communication w/ core
 	Have 3 channels w/ pieso speakers.
@@ -5,14 +8,20 @@ Hardware description:
 Software description:
 	Each channel has its own buffer (for now, size is unknown).
 	Clocks are used for measures & for tone frequency.
+	
 	I2C uses interrupts. Data type byte is used when recieving to
 	decide how to use them. Read request results in sending of the state byte.
 	I2C address is 0x03
+	
+	memory is divided as follows:
+	first 6 bytes - for start/end pointers (loop buffers)
+	last 16 bytes - for stack (may be changed later)
+	everything else - for 3 buffers
 
 SID recieves:
         data type - 1 byte
         BPM - 1 byte
-        loop mode on (1 bit per channel) - in data type byte
+        loop mode on and channel on/off (1 bit per channel) - in data type byte
         tones (1 byte tone + 1 byte measure) (empty tone included) - 2 bytes/tone
 
 SID sends:
@@ -21,11 +30,11 @@ SID sends:
 
 Data type byte format:
 
-	11xx0000 - will recieve tone in channel xx
+	11xx0000 - will recieve tone in channel xx (00, 01, 10)
 
 	10000000 - will recieve BPM
 
-	01xxx000 - set loop modes xxx (1 is loop on) on channels (left to right)
+	01xxxyyy - set loop modes xxx (1 is loop on) on channels (left to right) and turn channels on/off yyy (1 is on) (also left to right)
 	
 	00xxxxxx - reserved (actually not used)
 
