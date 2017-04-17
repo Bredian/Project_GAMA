@@ -15,7 +15,7 @@ wait:
 		andi r17, 1<<USIPF
 		in r18, PIN_USI
 		andi r18, 1<<PORT_SCL
-		com r18			;com is bitwise NOT
+		com r18					;com is bitwise NOT
 		and r17, r18
 		brne wait				;loop
 								;waiting for SCL to go low to make sure
@@ -45,12 +45,12 @@ counter_overflow:
 
 		cpi state_reg, CHECK_ADDR; case(state_reg)
 		breq check_addr_label
-		cpi state_reg, CHECK_REPLY
-		breq check_reply_label
+		;~ cpi state_reg, CHECK_REPLY;don't need (look at check_reply_label)
+		;~ breq check_reply_label
 		cpi state_reg, SEND_DATA
 		breq send_data_label
-		cpi state_reg, REQ_REPLY
-		breq req_reply_label
+		;~ cpi state_reg, REQ_REPLY;don't need (look at req_reply_label)
+		;~ breq req_reply_label
 		cpi state_reg, REQ_DATA
 		breq req_data_label
 								;if we are here, then state_reg = GET_DATA_AND_ACK
@@ -96,13 +96,13 @@ will_snd_data:
 
 		;end check_addr_label
 
-check_reply_label:
-		in r16, USIDR
-		tst r16
-		breq send_data_label			;if ACK, then send more data
-		rcall twi_set_start_cond_mode;if NACK, don't send anymore
-		rjmp end_overflow_int
-		;end check_reply_label
+;~ check_reply_label:			;we don't need this as we only send 1 byte
+		;~ in r16, USIDR
+		;~ tst r16
+		;~ breq send_data_label			;if ACK, then send more data
+		;~ rcall twi_set_start_cond_mode;if NACK, don't send anymore
+		;~ rjmp end_overflow_int
+		;~ ;end check_reply_label
 
 send_data_label:
 		mov r16, flags_reg
@@ -110,21 +110,20 @@ send_data_label:
 		breq nothing_to_send	;if tx buf is empty, reset
 		
 		andi flags_reg, 0x80	;clear tx buf (0x80 == ~(1<<7) == MSB)
-		out USIDR, usi_tx_buf
-		ldi state_reg, REQ_REPLY
+		out USIDR, usi_tx_buf 
 		rcall twi_set_send_byte	;send data
-		rjmp end_overflow_int
+								;we won't send anything else, so wait for START
 		
 nothing_to_send:
 		rcall twi_set_start_cond_mode
 		rjmp end_overflow_int
 		;end send_data_label
 
-req_reply_label:
-		ldi state_reg, CHECK_REPLY
-		rcall twi_set_rcv_ack
-		rjmp end_overflow_int
-		;end req_reply_label
+;~ req_reply_label:				;we don't need this as we only send 1 byte
+		;~ ldi state_reg, CHECK_REPLY
+		;~ rcall twi_set_rcv_ack
+		;~ rjmp end_overflow_int
+		;~ ;end req_reply_label
 
 req_data_label:
 		ldi state_reg, GET_DATA_AND_ACK
