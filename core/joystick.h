@@ -15,3 +15,11 @@
 #define BOMB 0b00000010
 #define SKIP 0b00000001
 #define JOY_ADDR 0b00000010
+
+void show_level(int number);
+
+void show_bombs(int number);
+  
+u08* button();
+  
+void controls();
