@@ -10,6 +10,7 @@
 
 int setup(){
 	/*Turning All Devices On*/
+	i2cInit();
 	/*Demo Screens Here*/
 	copy_map();
 	generate_level(level);
