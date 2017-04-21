@@ -5,8 +5,10 @@
 #include "i2cconf.h"
 #include "rprintf.h"
 #include "joystick.h"
+#include "bomb.h"
+#include "map.h"
 
-int show_level(int number){
+void show_level(int number){
 	switch(number){
 		case 1:
 			u08 n=ONE; 
@@ -47,7 +49,7 @@ int show_level(int number){
 	}
 }
 
-int show_bombs(int number){
+void show_bombs(int number){
 	switch(number){
 
 	switch(number){
@@ -94,4 +96,51 @@ u08* button(){
 	u08* button_pressed;
 	i2cMasterRecieve(JOY_ADDR,1,button_pressed);
 	return button_pressed;
+}
+	
+void controls(){
+	int a=herox;
+	a--;
+	int b=herox;
+	b++;
+	int c=heroy;
+	c--;
+	int d=heroy;
+	d++;
+	while(1){
+		if(*(button())==SKIP)
+			break;
+		if(*(button())==BOMB){
+			if(bc==0) continue;
+		}
+			else {
+				bomb_placement();
+				break;
+			}
+		if( *(button())==LEFT && mapa[heroy][a]!='#' && mapa[heroy][a]!='@' && mapa[heroy][a]!='*' && mapa[heroy][a]!='='){
+                	mapa[heroy][herox]='.';
+                	herox--;
+                	mapa[heroy][herox]='1';
+                	break;
+            }
+		if(*(button())==RIGHT && mapa[heroy][b]!='#' && mapa[heroy][b]!='@' && mapa[heroy][b]!='*' && mapa[heroy][b]!='='){
+                	mapa[heroy][herox]='.';
+                	herox++;
+                	mapa[heroy][herox]='1';
+                	break;
+            }
+		if( *(button())==UP && mapa[c][herox]!='#' && mapa[c][herox]!='@' && mapa[c][herox]!='*' && mapa[c][herox]!='='){
+                	mapa[heroy][herox]='.';
+                	heroy--;
+                	mapa[heroy][herox]='1';
+                	break;
+            }
+		if( *(button())==DOWN && mapa[d][herox]!='#' && mapa[d][herox]!='@' && mapa[d][herox]!='*' && mapa[d][herox]!='='){
+                	mapa[heroy][herox]='.';
+                	heroy++;
+                	mapa[heroy][herox]='1';
+                	break;
+            }
+		if(*(button())==LEFT && (mapa[heroy][a]=='#' || mapa[heroy][a]=='@' || mapa[heroy][a]=='*' || mapa[heroy][a]=='=')) || *(button())==RIGHT && (mapa[heroy][b]=='#' || mapa[heroy][b]=='@' || mapa[heroy][b]=='*' || mapa[heroy][b]=='=')) || (*(button())==UP && (mapa[c][herox]=='#' || mapa[c][herox]=='@' || mapa[c][herox]=='*' || mapa[c][herox]=='=')) || (*(button())==DOWN && (mapa[d][herox]=='#' || mapa[d][herox]=='@' || mapa[d][herox]=='*' || mapa[d][herox]=='='))) /*music here*/; 
+	}
 }
