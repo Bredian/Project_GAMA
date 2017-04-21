@@ -87,6 +87,9 @@ our_addr:
 
 will_req_data_label:
 		ldi state_reg, REQ_DATA
+		
+		ori flags_reg, (1<<6)	;set S.C. flag (Start cond. happened and we req. data)
+		
 		rcall twi_set_send_ack
 		rjmp end_overflow_int
 

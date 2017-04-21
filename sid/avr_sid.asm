@@ -1,11 +1,26 @@
 		.includepath "/usr/share/avra/"
 		.include "tn45def.inc"			; using ATTiny45
-
 		.include "macro.inc"
 
 		.include "usi_twi/usi_defines.inc"
 
 		.equ BUF_SIZE = 39				;buffer size on tones (2 bytes per tone)
+
+		.def state_byte_reg = r21		;register for state byte for TWI
+		.def BPM = r20
+		.def ch_state_reg = r19			;for channels' states (on/off, loop (in the future maybe))
+
+
+		.equ RCV_FSM_INIT = 0
+		.equ RCV_FSM_BPM = (1<<4)
+		.equ RCV_FSM_TONE_FREQ = (1<<5)
+		.equ RCV_FSM_TONE_MEAS = (1<<4)|(1<<5)
+
+		.equ DATA_TYPE_TONE = 0b11000000
+		.equ DATA_TYPE_BPM = 0b10000000
+		.equ DATA_TYPE_MODE = (1<<6)
+
+
 
 ; RAM ========================================================
 		.DSEG
@@ -92,12 +107,82 @@ usi_init:
 
 ; Run ==========================================================
 
+		clr usi_rx_buf
+		clr usi_tx_buf				;flushing buffers
+		
+		clr flags_reg				;nothing in buffers
+									;no write happened for us on TWI bus
+									;initial state of data receiver FSM
+									;don't save in any buffer
 ; End Run ======================================================
 
 
 
 ; Main =========================================================
 main:
+		
+check_received_data:
+		mov r16, flags_reg
+		andi r16, 0x80			;rx bit
+		breq no_data			;if nothing have been received
+		mov r18, usi_rx_buf;	;store volatile
+		
+		mov r16, flags_reg
+		andi r16, (1<<6)		;check if S.C. and write happened
+		breq data_type_byte_rcvd;if so, then data type byte have been received
+		
+		mov r16, flags_reg
+		andi r16, (1<<4)|(1<<5)	;get state bits
+		;~ cpi r16, RCV_FSM_INIT	;case(r16)
+		;~ breq data_type_byte_rcvd	;we don't need this case because it has been already checked
+		cpi r16, RCV_FSM_BPM
+		breq BPM_rcvd
+		cpi r16, RCV_FSM_TONE_MEAS
+		breq tone_meas_rcvd
+								;if we are here, then state is RCV_FSM_TONE_FREQ
+		
+tone_freq_rcvd:
+		
+		
+tone_meas_rcvd:
+		
+		
+data_type_byte_rcvd:
+		andi flags_reg, ~(1<<6)	;clear S.C. flag
+		
+		mov r16, r18			;data byte
+		andi r16, 0b11000000	;get data bits
+		cpi r16, DATA_TYPE_MODE
+		breq set_mode
+		cpi r16, DATA_TYPE_BPM
+		breq will_rcv_BPM
+		cpi r16, 0
+		breq no_data			;this should not happen (state is not used)
+								;if we are here, then r16 == DATA_TYPE_TONE
+		
+will_rcv_tone:
+		
+		
+will_rcv_BPM:
+		andi flags_reg, ~(1<<5)
+		ori flags_reg, (1<<4)	;set receiver FSM state == BPM
+		rjmp no_data
+		
+set_mode:
+		
+		
+		
+		
+
+BPM_rcvd:
+		
+		
+
+		
+no_data:
+		
+make_state_byte:
+		
 		
 		rjmp main
 ; End Main =====================================================

@@ -1,8 +1,4 @@
 
-		clr usi_rx_buf
-		clr usi_tx_buf				;flushing buffers
-		
-		clr flags_reg				;nothing in buffers
 
 		in r16, PORT_USI
 		ori r16, (1<<PORT_SCL)|(1<<PORT_SDA)
