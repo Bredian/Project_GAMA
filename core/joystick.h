@@ -14,3 +14,4 @@
 #define DOWN 0b00010000
 #define BOMB 0b00000010
 #define SKIP 0b00000001
+#define JOY_ADDR 0b00000010
