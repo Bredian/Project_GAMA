@@ -90,4 +90,8 @@ int show_bombs(int number){
 	}
 }
 
-int 
+u08* button(){
+	u08* button_pressed;
+	i2cMasterRecieve(JOY_ADDR,1,button_pressed);
+	return button_pressed;
+}
