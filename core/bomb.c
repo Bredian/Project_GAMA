@@ -1,5 +1,6 @@
 #include "bomb.h"
 #include "map.h"
+#include "joystick.h"
 
 int bomb_placement(){
 	int a=herox;
@@ -12,7 +13,7 @@ int bomb_placement(){
   	d++;
 	/*7_Segment_Show(bc);*/
 	/*7 Segment interaction here*/	
-	if(mapa[heroy][a]!='#' && mapa[heroy][a]!='@' && mapa[heroy][a]!='=' && /*button interaction here (left)*/){
+	if(mapa[heroy][a]!='#' && mapa[heroy][a]!='@' && mapa[heroy][a]!='=' && *(button())=LEFT){
 	            bx=a;
                 by=heroy;
                 btimer=3;
@@ -22,8 +23,8 @@ int bomb_placement(){
 		/*7 Segment interaction here*/
                 break;
 	}
-	if(mapa[heroy][b]!='#' && mapa[heroy][b]!='@' && mapa[heroy][b]!='=' && /*button interaction here (right)*/){
-		        bx=b;
+	if(mapa[heroy][b]!='#' && mapa[heroy][b]!='@' && mapa[heroy][b]!='=' && *(button())=RIGHT){
+		bx=b;
                 by=heroy;
                 btimer=3;
                 mapa[by][bx]='*';
@@ -32,8 +33,8 @@ int bomb_placement(){
 		/*7 Segment interaction here*/
                 break;
 	}
-	if(mapa[c][herox]!='#' && mapa[c][herox]!='@' && mapa[c][herox]!='=' && /*button interaction here (down)*/){
-			    bx=herox;
+	if(mapa[c][herox]!='#' && mapa[c][herox]!='@' && mapa[c][herox]!='=' && *(button())=DOWN){
+		bx=herox;
                 by=c;
                 btimer=3;
                 mapa[by][bx]='*';
@@ -42,8 +43,8 @@ int bomb_placement(){
 		/*7 Segment interaction here*/
                 break;
 	}
-	if(mapa[d][herox]!='#' && mapa[d][herox]!='@' && mapa[d][herox]!='=' && /*button interaction here (up)*/){
-				bx=herox;
+	if(mapa[d][herox]!='#' && mapa[d][herox]!='@' && mapa[d][herox]!='=' && *(button())==UP){
+		bx=herox;
                 by=c;
                 btimer=3;
                 mapa[by][bx]='*';
