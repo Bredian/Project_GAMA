@@ -40,9 +40,41 @@ void main(void) {
 	
 }
 
+
 uint8_t read_buttons(void) {
-	uint8_t buttons;
+	uint8_t buttons = 0, tmp = 0, i;
 	
+	DDRB &= ~(1 << DATA);			//will receive data
+	
+	PORTB &= ~(1 << SAMPLE);		//sampling buttons
+	PORTB |= (1 << SAMPLE);
+	
+	PORTB &= ~(1 << CLK_BUT);		//clock goes down
+	
+	i = 0;
+	
+	do {
+		PORTB |= (1 << CLK_BUT);	//clock goes up, data are clocked out of SR
+		PORTB &= ~(1 << CLK_BUT);	//clock goes down
+		
+		tmp >>= 1;
+		
+		if(PORTB & (1 << DATA) == 1)//getting data
+			tmp |= (1 << 7);
+		else
+			tmp &= ~(1 << 7);
+		
+		i++;
+	} while (i < 8);
+									//now we have buttons' state in tmp, LSB is P7 of SR
+	
+										//magic numbers! actually, we shake bits to get them in right places
+	buttons |= (tmp & (1 << 5)) << 5;	//up
+	buttons |= (tmp & (1 << 7)) << 4;	//down
+	buttons |= (tmp & (1 << 6)) << 3;	//left
+	buttons |= (tmp & (1 << 3)) << 2;	//right
+	buttons |= (tmp & (1 << 2)) << 1;	//A
+	buttons |= (tmp & (1 << 1)) << 0;	//B
 	
 	return buttons; 
 }

@@ -597,27 +597,27 @@ PB0
 Text Label 4550 1450 2    60   ~ 0
 PB2
 Text Label 6750 1000 0    60   ~ 0
-B_U
+B_B
 Text Label 6750 1650 0    60   ~ 0
-B_L
+B_R
 Text Label 6750 2300 0    60   ~ 0
 B_D
 Text Label 6750 2950 0    60   ~ 0
-B_R
+B_U
 Text Label 6750 3600 0    60   ~ 0
-B_A
+B_L
 Text Label 6750 4250 0    60   ~ 0
-B_B
+B_A
 Text Label 6300 1200 0    60   ~ 0
 B_D
 Text Label 6300 1300 0    60   ~ 0
-B_L
-Text Label 6300 1400 0    60   ~ 0
-B_U
-Text Label 6300 1600 0    60   ~ 0
 B_R
+Text Label 6300 1400 0    60   ~ 0
+B_B
+Text Label 6300 1600 0    60   ~ 0
+B_U
 Text Label 6300 1700 0    60   ~ 0
-B_A
+B_L
 $Comp
 L +5V #PWR011
 U 1 1 58A4A93F
@@ -830,7 +830,7 @@ $EndComp
 Entry Wire Line
 	6450 1800 6550 1900
 Text Label 6300 1800 0    60   ~ 0
-B_B
+B_A
 NoConn ~ 6250 1900
 NoConn ~ 6250 1500
 NoConn ~ 6250 1100
