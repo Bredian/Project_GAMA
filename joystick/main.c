@@ -28,13 +28,13 @@ void main(void) {
 	
 	while(1) {
 		
-		if(USI_TWI_Data_In_Receive_Buffer)
+		if(USI_TWI_Data_In_Receive_Buffer())
 			{
-				tmp = USI_TWI_Receive_Byte;
+				tmp = USI_TWI_Receive_Byte();
 				set_7seg(tmp);
 			}
 		
-		tmp = read_buttons;
+		tmp = read_buttons();
 		USI_TWI_Transmit_Byte(tmp);	//not actually transmit, but put in buffer in order to transmit
 	}
 	
@@ -59,7 +59,7 @@ uint8_t read_buttons(void) {
 		
 		tmp >>= 1;
 		
-		if(PORTB & (1 << DATA) == 1)//getting data
+		if((PORTB & (1 << DATA)) == 1)//getting data
 			tmp |= (1 << 7);
 		else
 			tmp &= ~(1 << 7);
@@ -125,7 +125,7 @@ void set_7seg(uint8_t num) {
 	DDRB |= (1 << DATA);			//now we send data
 	for(i = 0; i < 8; i++) {		//shifting data out. LSB goes first
 		PORTB &= ~(1 << CLK_7SEG);	//clock goes down
-		if (tmp & 1 == 1) PORTB |= (1 << DATA);
+		if ((tmp & 1) == 1) PORTB |= (1 << DATA);
 			else PORTB &= ~(1 << DATA);	//putting data bit on DATA
 		PORTB |= (1 << CLK_7SEG);	//clock goes up, shifting our data bit out
 	}
