@@ -1,6 +1,8 @@
 #include "bomb.h"
+#include "map.h"
+#include "joystick.h"
 
-int bomb_placement(){
+void bomb_placement(){
 	int a=herox;
 	a--;
   	int b=herox;
@@ -9,46 +11,49 @@ int bomb_placement(){
   	c--;
   	int d=heroy;
   	d++;
-	7_Segment_Show(bc);
-	if(mapa[heroy][a]!='#' && mapa[heroy][a]!='@' && mapa[heroy][a]!='=' && /*button interaction here (left)*/){
+	show_bombs(bc);
+	while(1){	
+	if(mapa[heroy][a]!='#' && mapa[heroy][a]!='@' && mapa[heroy][a]!='=' && *(button())==LEFT){
 	            bx=a;
                 by=heroy;
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                7_Segment_Clean();
+			show_level(level);
                 break;
 	}
-	if(mapa[heroy][b]!='#' && mapa[heroy][b]!='@' && mapa[heroy][b]!='=' && /*button interaction here (right)*/){
-		        bx=b;
+	if(mapa[heroy][b]!='#' && mapa[heroy][b]!='@' && mapa[heroy][b]!='=' && *(button())==RIGHT){
+		bx=b;
                 by=heroy;
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                7_Segment_Clean();
+                show_level(level);
                 break;
 	}
-	if(mapa[c][herox]!='#' && mapa[c][herox]!='@' && mapa[c][herox]!='=' && /*button interaction here (down)*/){
-			    bx=herox;
+	if(mapa[c][herox]!='#' && mapa[c][herox]!='@' && mapa[c][herox]!='=' && *(button())==DOWN){
+		bx=herox;
                 by=c;
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                7_Segment_Clean();
+                show_level(level);
                 break;
 	}
-	if(mapa[d][herox]!='#' && mapa[d][herox]!='@' && mapa[d][herox]!='=' && /*button interaction here (up)*/){
-				bx=herox;
+	if(mapa[d][herox]!='#' && mapa[d][herox]!='@' && mapa[d][herox]!='=' && *(button())==UP){
+		bx=herox;
                 by=c;
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                7_Segment_Clean();
+                show_level(level);
                 break;
 	}
+	}
+	return;
 }
 
-int bomb_expolion(){
+void bomb_expolion(){
 	btimer--;
 	if(btimer==0){
     	for(int v=0;v<level;v++){
@@ -73,4 +78,5 @@ int bomb_expolion(){
   }
   else /*tone(7,220,120)*/;
   /*sound playback here*/
+  return;
 }

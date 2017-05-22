@@ -2,20 +2,38 @@
 #include <stdlib.h>
 #include <math.h>
 #include "bomb.h"
+#include "map.h"
+#include "logic.h"
+#include "lcd.h"
+#include "sid.h"
+#include "joystick.h"
 
-int loop(){
+void setup(){
+	lcdInit();
+	i2cInit();
+	copy_map();
+	generate_level(level);
+	print_map();
+	return;
 	
 }
 
-int setup(){
-	
+void loop(){
+	show_level(level);
+	check_gameover();
+	controls();
+	/*Sucsessful Turn Sound Here*/
+	proceed_turn(level);
+	if(bp==1 && bx!=-1 && by!=-1 && bc!=0 ) bomb_explosion();
+	check_nish();
+	print_map();
+	return;
 }
 
-
-
-int main(){
+void main(){
 	setup();
 	while(1){
 		loop();
 	}
+	return;
 }
