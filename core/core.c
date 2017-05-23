@@ -18,6 +18,7 @@ extern char mapac1[10][42];*/
 
 void setup(){
 	lcdInit();
+	lcdClear();
 	i2cInit();
 	copy_map();
 	generate_level(level_current());

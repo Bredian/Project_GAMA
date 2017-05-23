@@ -1,15 +1,18 @@
-MCU = atmega168pa
+MCU = atmega168p
 
-GCC_FLAGS = -Wall -mmcu=$(MCU) -Os
+GCC_FLAGS = -Wall -mmcu=$(MCU)a -Os
+
+PROG_PORT = /dev/ttyACM3
+AVRDUDE_FLAGS = -v -p $(MCU) -c stk500v2 -P $(PROG_PORT) -B 200kHz
 
 
-.PHONY: all clean
+.PHONY: all clean flash fuse
 
-all: game
+all: game hex
 
 
 game: code libs
-	avr-gcc -o game core.o bomb.o joystick.o logic.o map.o buffer.o i2c.o lcd.o 
+	avr-gcc -o game core.o bomb.o joystick.o logic.o map.o buffer.o i2c.o lcd.o
 
 
 
@@ -54,6 +57,15 @@ lcd.o: lcd.c lcd.h
 
 
 
+hex: game
+	avr-objcopy -O ihex game game.hex
+
+flash: game
+	sudo avrdude $(AVRDUDE_FLAGS) -U flash:w:game.hex:i
+
+fuse:
+	sudo avrdude $(AVRDUDE_FLAGS) -U lfuse:w:0xef:m -U hfuse:w:0xdf:m -U efuse:w:0xf9:m
 
 clean:
 	rm -rf *.o
+	rm -rf game game.hex

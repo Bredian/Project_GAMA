@@ -48,11 +48,11 @@
 #ifdef LCD_PORT_INTERFACE
 	#ifndef LCD_CTRL_PORT
 		// port and pins you will use for control lines
-		#define LCD_CTRL_PORT	PORTC
-		#define LCD_CTRL_DDR	DDRC
-		#define LCD_CTRL_RS		2
-		#define LCD_CTRL_RW		3
-		#define LCD_CTRL_E		4
+		#define LCD_CTRL_PORT	PORTD
+		#define LCD_CTRL_DDR	DDRD
+		#define LCD_CTRL_RS		5
+		#define LCD_CTRL_RW		6
+		#define LCD_CTRL_E		7
 	#endif
 	#ifndef LCD_DATA_POUT
 		// port you will use for data lines

@@ -341,14 +341,14 @@ void lcdInit()
 	lcdControlWrite(1<<LCD_DDRAM | 0x00);
 
 	// load the first 8 custom characters
-	lcdLoadCustomChar((u08*)LcdCustomChar,0,0);
-	lcdLoadCustomChar((u08*)LcdCustomChar,1,1);
-	lcdLoadCustomChar((u08*)LcdCustomChar,2,2);
-	lcdLoadCustomChar((u08*)LcdCustomChar,3,3);
-	lcdLoadCustomChar((u08*)LcdCustomChar,4,4);
-	lcdLoadCustomChar((u08*)LcdCustomChar,5,5);
-	lcdLoadCustomChar((u08*)LcdCustomChar,6,6);
-	lcdLoadCustomChar((u08*)LcdCustomChar,7,7);
+	//~ lcdLoadCustomChar((u08*)LcdCustomChar,0,0);
+	//~ lcdLoadCustomChar((u08*)LcdCustomChar,1,1);
+	//~ lcdLoadCustomChar((u08*)LcdCustomChar,2,2);
+	//~ lcdLoadCustomChar((u08*)LcdCustomChar,3,3);
+	//~ lcdLoadCustomChar((u08*)LcdCustomChar,4,4);
+	//~ lcdLoadCustomChar((u08*)LcdCustomChar,5,5);
+	//~ lcdLoadCustomChar((u08*)LcdCustomChar,6,6);
+	//~ lcdLoadCustomChar((u08*)LcdCustomChar,7,7);
 }
 
 void lcdHome(void)

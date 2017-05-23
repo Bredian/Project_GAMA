@@ -77,7 +77,7 @@ void print_map(){
 	for(j=a;j<b+1;j++){
 		for(i=c;i<d+1;i++){
 			lcdGotoXY(i-c,j-a);
-			lcdPrintData(&mapa[j][i],1);
+			lcdPrintData(&(mapa[j][i]), 1);
 		}
 	}
 	return;
