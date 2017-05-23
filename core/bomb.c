@@ -30,7 +30,7 @@ void bomb_placement(){
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-			show_level(level);
+			show_level(level_current());
                 break;
 	}
 	if(mapa[heroy][b]!='#' && mapa[heroy][b]!='@' && mapa[heroy][b]!='=' && *(button())==RIGHT){
@@ -39,7 +39,7 @@ void bomb_placement(){
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                show_level(level);
+                show_level(level_current());
                 break;
 	}
 	if(mapa[c][herox]!='#' && mapa[c][herox]!='@' && mapa[c][herox]!='=' && *(button())==DOWN){
@@ -48,7 +48,7 @@ void bomb_placement(){
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                show_level(level);
+                show_level(level_current());
                 break;
 	}
 	if(mapa[d][herox]!='#' && mapa[d][herox]!='@' && mapa[d][herox]!='=' && *(button())==UP){
@@ -57,7 +57,7 @@ void bomb_placement(){
                 btimer=3;
                 mapa[by][bx]='*';
                 bp=1;
-                show_level(level);
+                show_level(level_current());
                 break;
 	}
 	}
@@ -68,7 +68,7 @@ void bomb_explosion(){
 	int v, j, i;
 	btimer--;
 	if(btimer==0){
-    	for(v=0;v<level;v++){
+    	for(v=0;v<level_current();v++){
     		for(j=by-1;j<by+2;j++){
       			for(i=bx-1;i<bx+2;i++){
       				if(enemies[v][0]==j && enemies[v][1]==i){
@@ -91,4 +91,8 @@ void bomb_explosion(){
   else /*tone(7,220,120)*/;
   /*sound playback here*/
   return;
+}
+
+int bomb_counter(){
+    return bc;
 }
