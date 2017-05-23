@@ -12,3 +12,8 @@ void generate_level(int level);
 void copy_map();
 
 void print_map();
+
+int level_current();
+
+void level_up();
+
