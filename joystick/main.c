@@ -1,5 +1,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/cpufunc.h>
 #include "USI_TWI_Slave.h"
 
 #define SLAVE_ADDR 0x02
@@ -47,14 +48,18 @@ uint8_t read_buttons(void) {
 	DDRB &= ~(1 << DATA);			//will receive data
 	
 	PORTB &= ~(1 << SAMPLE);		//sampling buttons
+	_NOP();
+	_NOP();
 	PORTB |= (1 << SAMPLE);
 	
 	PORTB &= ~(1 << CLK_BUT);		//clock goes down
 	
 	i = 0;
 	
-	do {
+	while(i < 8) {
 		PORTB |= (1 << CLK_BUT);	//clock goes up, data are clocked out of SR
+		_NOP();
+		_NOP();
 		PORTB &= ~(1 << CLK_BUT);	//clock goes down
 		
 		tmp >>= 1;
@@ -65,7 +70,7 @@ uint8_t read_buttons(void) {
 			tmp &= ~(1 << 7);
 		
 		i++;
-	} while (i < 8);
+	}
 									//now we have buttons' state in tmp, LSB is P7 of SR
 	
 										//magic numbers! actually, we shake bits to get them in right places
@@ -85,40 +90,39 @@ void set_7seg(uint8_t num) {
 	uint8_t i;
 	
 	tmp = (num & (1 << 4)) << 3;		//magic begins; tmp's MSB is dot
-	
-	num = num & 0b00001111;			//the only thing left in num now is number to display
-	switch(num) {					//loads of magic numbers follow. don't worry, it's just numbers to display 
-		case 0: num = num | 0b01110111;
+										//the only thing left now is number to display
+	switch(num & 0b00001111) {					//loads of magic numbers follow. don't worry, it's just numbers to display 
+		case 0: tmp = tmp | 0b01110111;
 			break;
-		case 1: num = num | 0b01000001;
+		case 1: tmp = tmp | 0b01000001;
 			break;
-		case 2: num = num | 0b00111011;
+		case 2: tmp = tmp | 0b00111011;
 			break;
-		case 3: num = num | 0b01101011;
+		case 3: tmp = tmp | 0b01101011;
 			break;
-		case 4: num = num | 0b01001101;
+		case 4: tmp = tmp | 0b01001101;
 			break;
-		case 5: num = num | 0b01101110;
+		case 5: tmp = tmp | 0b01101110;
 			break;
-		case 6: num = num | 0b01111110;
+		case 6: tmp = tmp | 0b01111110;
 			break;
-		case 7: num = num | 0b01000011;
+		case 7: tmp = tmp | 0b01000011;
 			break;
-		case 8: num = num | 0b01111111;
+		case 8: tmp = tmp | 0b01111111;
 			break;
-		case 9: num = num | 0b01101111;
+		case 9: tmp = tmp | 0b01101111;
 			break;
-		case 0x0a: num = num | 0b01011111;
+		case 0x0a: tmp = tmp | 0b01011111;
 			break;
-		case 0x0b: num = num | 0b01111100;
+		case 0x0b: tmp = tmp | 0b01111100;
 			break;
-		case 0x0c: num = num | 0b00110110;
+		case 0x0c: tmp = tmp | 0b00110110;
 			break;
-		case 0x0d: num = num | 0b01111001;
+		case 0x0d: tmp = tmp | 0b01111001;
 			break;
-		case 0x0e: num = num | 0b00111110;
+		case 0x0e: tmp = tmp | 0b00111110;
 			break;
-		case 0x0f: num = num | 0b00011110;
+		case 0x0f: tmp = tmp | 0b00011110;
 			break;
 	}
 	
@@ -127,6 +131,8 @@ void set_7seg(uint8_t num) {
 		PORTB &= ~(1 << CLK_7SEG);	//clock goes down
 		if ((tmp & 1) == 1) PORTB |= (1 << DATA);
 			else PORTB &= ~(1 << DATA);	//putting data bit on DATA
+		_NOP();
+		_NOP();
 		PORTB |= (1 << CLK_7SEG);	//clock goes up, shifting our data bit out
 	}
 	
