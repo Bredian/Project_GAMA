@@ -1,12 +1,17 @@
+#include "global.h"
 #include <avr/io.h>
 #include <stdlib.h>
 #include <math.h>
+#include "lcd.h"
+#include "i2c.h"
 #include "bomb.h"
 #include "map.h"
 #include "logic.h"
-#include "lcd.h"
-#include "sid.h"
 #include "joystick.h"
+
+//~ extern int bx, by, bc, btimer, bp;		//bomb parameters
+//~ extern int level;
+//~ extern char mapac1[10][42];
 
 void setup(){
 	lcdInit();

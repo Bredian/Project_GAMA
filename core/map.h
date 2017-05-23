@@ -19,8 +19,8 @@ char mapac1[10][42]=
 /*Main game map*/
 char mapa[10][42];
 
-int generate_level(int level);
+void generate_level(int level);
 
-int copy_map();
+void copy_map();
 
-int print_map();
+void print_map();

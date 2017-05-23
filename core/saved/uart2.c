@@ -17,6 +17,7 @@
 //		which can be found at http://www.gnu.org/licenses/gpl.txt
 //
 //*****************************************************************************
+#include "global.h"
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -70,24 +71,24 @@ void uart0Init(void)
 	sei();
 }
 
-void uart1Init(void)
-{
-	// initialize the buffers
-	uart1InitBuffers();
-	// initialize user receive handlers
-	UartRxFunc[1] = 0;
-	// enable RxD/TxD and interrupts
-	outb(UCSR1B, BV(RXCIE)|BV(TXCIE)|BV(RXEN)|BV(TXEN));
-	// set default baud rate
-	uartSetBaudRate(1, UART1_DEFAULT_BAUD_RATE);
-	// initialize states
-	uartReadyTx[1] = TRUE;
-	uartBufferedTx[1] = FALSE;
-	// clear overflow count
-	uartRxOverflow[1] = 0;
-	// enable interrupts
-	sei();
-}
+//~ void uart1Init(void)
+//~ {
+	//~ // initialize the buffers
+	//~ uart1InitBuffers();
+	//~ // initialize user receive handlers
+	//~ UartRxFunc[1] = 0;
+	//~ // enable RxD/TxD and interrupts
+	//~ outb(UCSR1B, BV(RXCIE)|BV(TXCIE)|BV(RXEN)|BV(TXEN));
+	//~ // set default baud rate
+	//~ uartSetBaudRate(1, UART1_DEFAULT_BAUD_RATE);
+	//~ // initialize states
+	//~ uartReadyTx[1] = TRUE;
+	//~ uartBufferedTx[1] = FALSE;
+	//~ // clear overflow count
+	//~ uartRxOverflow[1] = 0;
+	//~ // enable interrupts
+	//~ sei();
+//~ }
 
 void uart0InitBuffers(void)
 {
@@ -102,17 +103,17 @@ void uart0InitBuffers(void)
 	#endif
 }
 
-void uart1InitBuffers(void)
-{
-	#ifndef UART_BUFFER_EXTERNAL_RAM
-		// initialize the UART1 buffers
-		bufferInit(&uartRxBuffer[1], uart1RxData, UART1_RX_BUFFER_SIZE);
-		bufferInit(&uartTxBuffer[1], uart1TxData, UART1_TX_BUFFER_SIZE);
-	#else
-		// initialize the UART1 buffers
-		bufferInit(&uartRxBuffer[1], (u08*) UART1_RX_BUFFER_ADDR, UART1_RX_BUFFER_SIZE);
-		bufferInit(&uartTxBuffer[1], (u08*) UART1_TX_BUFFER_ADDR, UART1_TX_BUFFER_SIZE);
-	#endif
+//~ void uart1InitBuffers(void)
+//~ {
+	//~ #ifndef UART_BUFFER_EXTERNAL_RAM
+		//~ // initialize the UART1 buffers
+		//~ bufferInit(&uartRxBuffer[1], uart1RxData, UART1_RX_BUFFER_SIZE);
+		//~ bufferInit(&uartTxBuffer[1], uart1TxData, UART1_TX_BUFFER_SIZE);
+	//~ #else
+		//~ // initialize the UART1 buffers
+		//~ bufferInit(&uartRxBuffer[1], (u08*) UART1_RX_BUFFER_ADDR, UART1_RX_BUFFER_SIZE);
+		//~ bufferInit(&uartTxBuffer[1], (u08*) UART1_TX_BUFFER_ADDR, UART1_TX_BUFFER_SIZE);
+	//~ #endif
 }
 
 void uartSetRxHandler(u08 nUart, void (*rx_func)(unsigned char c))
@@ -131,10 +132,10 @@ void uartSetBaudRate(u08 nUart, u32 baudrate)
 	u16 bauddiv = ((F_CPU+(baudrate*8L))/(baudrate*16L)-1);
 	if(nUart)
 	{
-		outb(UBRR1L, bauddiv);
-		#ifdef UBRR1H
-		outb(UBRR1H, bauddiv>>8);
-		#endif
+		//~ outb(UBRR1L, bauddiv);
+		//~ #ifdef UBRR1H
+		//~ outb(UBRR1H, bauddiv>>8);
+		//~ #endif
 	}
 	else
 	{

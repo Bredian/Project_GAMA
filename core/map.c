@@ -1,12 +1,15 @@
+#include <stdlib.h>
 #include "map.h"
+#include "lcd.h"
+
 
 void generate_level(int level){
-	/*random seed here*/
+	srand(64);
 	int n=0;
     while(n<level){
         int x,y;
-        x=random(41);
-        y=random(9);
+        x=rand()%41;
+        y=rand()%9;
         if(mapa[y][x]=='.'){
             enemies[n][0]=y;
             enemies[n][1]=x;
@@ -17,8 +20,8 @@ void generate_level(int level){
     int m=0;
     while(m<1){
         int x,y;
-        x=random(41);
-        y=random(9);
+        x=rand()%41;
+        y=rand()%9;
         if(mapa[y][x]=='.'){
             heroy=y;
             herox=x;
@@ -29,8 +32,8 @@ void generate_level(int level){
     int p=0;
     while(p<2){
         int x,y;
-        x=random(41);
-        y=random(9);
+        x=rand()%41;
+        y=rand()%9;
         if(mapa[y][x]=='.'){
             mapa[y][x]='~';
             p++;

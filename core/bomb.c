@@ -1,3 +1,4 @@
+#include "global.h"
 #include "bomb.h"
 #include "map.h"
 #include "joystick.h"
@@ -53,12 +54,13 @@ void bomb_placement(){
 	return;
 }
 
-void bomb_expolion(){
+void bomb_explosion(){
+	int v, j, i;
 	btimer--;
 	if(btimer==0){
-    	for(int v=0;v<level;v++){
-    		for(int j=by-1;j<by+2;j++){
-      			for(int i=bx-1;i<bx+2;i++){
+    	for(v=0;v<level;v++){
+    		for(j=by-1;j<by+2;j++){
+      			for(i=bx-1;i<bx+2;i++){
       				if(enemies[v][0]==j && enemies[v][1]==i){
         				enemies[v][0]=-1;
         				enemies[v][1]=-1;
@@ -66,8 +68,8 @@ void bomb_expolion(){
       }
     }
   }
-  for(int j=by-1;j<by+2;j++){
-    for(int i=bx-1;i<bx+2;i++){
+  for(j=by-1;j<by+2;j++){
+    for(i=bx-1;i<bx+2;i++){
       if(mapa[j][i]!='=') mapa[j][i]='.';
     }
   }

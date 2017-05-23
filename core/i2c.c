@@ -15,13 +15,13 @@
 //
 //*****************************************************************************
 
+#include "i2c.h"
+
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include "i2c.h"
-
-#include "rprintf.h"	// include printf function library
-#include "uart2.h"
+//~ #include "rprintf.h"	// include printf function library
+//~ #include "uart2.h"
 
 // Standard I2C bit rates are:
 // 100KHz for slow speed
@@ -361,7 +361,7 @@ void i2cMasterTransferNI(u08 deviceAddr, u08 sendlength, u08* senddata, u08 rece
 */
 
 //! I2C (TWI) interrupt service routine
-SIGNAL(SIG_2WIRE_SERIAL)
+SIGNAL(TWI_vect)
 {
 	// read status bits
 	u08 status = inb(TWSR) & TWSR_STATUS_MASK;

@@ -16,16 +16,18 @@
 //
 //*****************************************************************************
 
+#include "global.h"
+
 #include <avr/io.h>
 #include <avr/pgmspace.h>
+#include <util/delay.h>
 
-#include "global.h"
-#include "timer.h"
+//~ #include "timer.h"
 
 #include "lcd.h"
 
 // custom LCD characters
-unsigned char __attribute__ ((progmem)) LcdCustomChar[] =
+const unsigned char __attribute__ ((progmem)) LcdCustomChar[] =
 {
 	0x00, 0x1F, 0x00, 0x00, 0x00, 0x00, 0x1F, 0x00, // 0. 0/5 full progress block
 	0x00, 0x1F, 0x10, 0x10, 0x10, 0x10, 0x1F, 0x00, // 1. 1/5 full progress block
@@ -327,7 +329,7 @@ void lcdInit()
 	lcdControlWrite(LCD_FUNCTION_DEFAULT);
 	// clear LCD
 	lcdControlWrite(1<<LCD_CLR);
-	delay(60000);	// wait 60ms
+	_delay_ms(60);	// wait 60ms
 	// set entry mode
 	lcdControlWrite(1<<LCD_ENTRY_MODE | 1<<LCD_ENTRY_INC);
 	// set display to on

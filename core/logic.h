@@ -1,7 +1,7 @@
-int proceed_turn(int level);
+void proceed_turn(int level);
 
-int check_nish();
+void check_nish();
 
-int check_gameover();
+void check_gameover();
 
-int levelup();
+void levelup();

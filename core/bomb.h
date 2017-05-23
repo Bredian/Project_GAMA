@@ -8,6 +8,6 @@ int bp=0;
 
 int bc=3;
 
-int bomb_placement();
+void bomb_placement();
 
-int bomb_explosion();
+void bomb_explosion();

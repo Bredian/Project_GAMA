@@ -2,6 +2,10 @@
 #include "logic.h"
 #include "lcd.h"
 
+int abs(int num){
+	return (num >= 0 ? num : -num);
+}
+
 void proceed_turn(int level){
   		int q;
         for(q=0;q<level;q++){
@@ -47,7 +51,6 @@ void check_gameover(){
             for(i=0;i<42;i++)
                 if(mapa[j][i]=='1') k++;
         if(k==0) {
-            delay(1000);
 			lcdPrintData("Game over",9);
 			lcdGotoXY(0,1);
 			lcdPrintData("Button to Play Again",20);
@@ -62,11 +65,10 @@ void check_gameover(){
 }
 
 void levelup(){
-  	copy_Map();
-  	generate_Level(level);
+	copy_map();
+	generate_level(level);
 	print_map();
-  }
-  return;	
+	return;
 }
 
 void check_nish(){

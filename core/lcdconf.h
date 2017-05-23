@@ -56,9 +56,10 @@
 	#endif
 	#ifndef LCD_DATA_POUT
 		// port you will use for data lines
-		#define LCD_DATA_POUT	PORTA
-		#define LCD_DATA_PIN	PINA
-		#define LCD_DATA_DDR	DDRA
+		#define LCD_DATA_POUT	PORTB
+		#define LCD_DATA_PIN	PINB
+		#define LCD_DATA_DDR	DDRB
+		#define LCD_DATA_DDR	DDRB
 		// access mode you will use (default is 8bit unless 4bit is selected)
 		//#define LCD_DATA_4BIT
 	#endif
