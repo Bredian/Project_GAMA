@@ -17,18 +17,18 @@ void setup(){
 	lcdInit();
 	i2cInit();
 	copy_map();
-	generate_level(level);
+	generate_level(level_current());
 	print_map();
 	return;
 	
 }
 
 void loop(){
-	show_level(level);
+	show_level(level_current());
 	check_gameover();
 	controls();
 	/*Sucsessful Turn Sound Here*/
-	proceed_turn(level);
+	proceed_turn(level_current());
 	if(bp==1 && bx!=-1 && by!=-1 && bc!=0 ) bomb_explosion();
 	check_nish();
 	print_map();
