@@ -10,3 +10,4 @@ Krylov Alexander - Main Processing Unit programming (C lang (+asm maybe)) - Atme
 
 Savostenok Zlata - Controller interface programming (C lang) - Attiny45 + 7400 series logic
 
+Buchnev Arseniy - Hardware maintenance and soldering
