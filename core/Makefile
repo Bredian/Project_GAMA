@@ -1,6 +1,6 @@
 MCU = atmega168pa
 
-GCC_FLAGS = -Wall -mmcu=$(MCU)
+GCC_FLAGS = -Wall -mmcu=$(MCU) -Os
 
 
 .PHONY: all clean
@@ -9,7 +9,7 @@ all: game
 
 
 game: code libs
-	avr-gcc -o game core.o bomb.o joystick.o logic.o map.o buffer.o i2c.o lcd.o -lm
+	avr-gcc -o game core.o bomb.o joystick.o logic.o map.o buffer.o i2c.o lcd.o 
 
 
 
@@ -25,7 +25,7 @@ joystick.o: joystick.c joystick.h
 	avr-gcc $(GCC_FLAGS) -c -o joystick.o joystick.c
 
 logic.o: logic.c logic.h
-	avr-gcc $(GCC_FLAGS) -c -o logic.o logic.c -lm
+	avr-gcc $(GCC_FLAGS) -c -o logic.o logic.c 
 
 map.o: map.c map.h
 	avr-gcc $(GCC_FLAGS) -c -o map.o map.c
