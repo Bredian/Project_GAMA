@@ -4,4 +4,4 @@ void check_nish();
 
 void check_gameover();
 
-void levelup();
+void level_up();
