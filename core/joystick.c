@@ -115,7 +115,7 @@ void controls(){
 		if(*(button())==SKIP)
 			break;
 		if(*(button())==BOMB){
-			if(bc==0) continue;
+			if(bomb_counter()==0) continue;
 		}
 			else {
 				bomb_placement();
