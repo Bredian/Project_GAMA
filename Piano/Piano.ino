@@ -36,52 +36,56 @@ int notes[2][KEYS] = {
 
 char keys[10];
 
-int S=0;
+int S = 0;
 
-void piano_play(int S,char * keys,int (*notes)[KEYS]){
+void piano_play() {
   int qa[10];
-  for(int j=0;j<S;j++){
-  for(int i=0;i<KEYS;i++){
-    if(keys[j]==notes[0][i]) qa[i]=i;
+  
+  for(int j = 0; j < S; j++) {
+    for(int i = 0; i < KEYS; i++) {
+      if(keys[j]==notes[0][i])
+       qa[i] = i;
+    }
   }
-  }
-  if(S==0) tone(7,notes[1][qa[0]],20);
-  else{
-    for(int i=0;i<S;i++){
-      tone(7,notes[1][qa[i]],20);
+  
+  if(S==1)
+   tone(7, notes[1][qa[0]], 20);
+  else if( S > 0 ) {
+    for(int i = 0; i < S; i++) {
+      tone(7, notes[1][qa[i]], 20);
       delay(20);
       noTone(7);
     }
   }
-    
 }
 
+
 void setup() {
-  for(int i=0;i<10;i++){
+  for(int i = 0; i < 10; i++) {
     keys[i]=' ';
   }
   keyboard.begin(DataPin, IRQpin);
 }
 
+
 void loop() {
-  int q=0;
-  if (keyboard.available()){
-    //for(int i=32;i<127;i++){
-    char c = keyboard.read();
-    /*if(c==i){
-      keys[q]=i;
-      S++;
-      q++;
-    }*/
-    keys[0]=c;
+  int q = 0;
+  char c = ' ';
+
+  if( keyboard.available() ) {
+
+    c = keyboard.read();
+    keys[0] = c;
     S++;
      
   }
-      piano_play(S,keys,notes);
-    for(int i=0;i<10;i++){
-    keys[i]=' ';
-    }
-
-     S=0;
+  
+  piano_play();
+  
+  for(int i = 0; i < 10; i++) {
+   keys[i]=' ';
   }
+
+  S=0;
+ }
 
